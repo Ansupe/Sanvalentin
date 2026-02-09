@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para ti ❤️</title>
+
+<style>
+body{
+  margin:0;
+  overflow:hidden;
+  background: radial-gradient(circle at center, #1a001a, #000);
+  font-family:'Segoe Script', cursive;
+  color:white;
+  text-align:center;
+}
+
+/* ocultamos el reproductor */
+#player{
+  position:absolute;
+  top:-9999px;
+}
+
+/* tocar */
+#tap{
+  position:absolute;
+  width:100%;
+  top:45%;
+  font-size:30px;
+  animation: latido 1.5s infinite;
+  cursor:pointer;
+}
+@keyframes latido{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+}
+
+#intro,#mensaje,.rosa{
+  opacity:0;
+  transition:2s;
+}
+
+#intro{
+  position:absolute;
+  top:40%;
+  width:100%;
+  font-size:26px;
+}
+
+.rosa{
+  position:absolute;
+  bottom:-200px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:120px;
+}
+
+#mensaje{
+  position:absolute;
+  top:20%;
+  width:100%;
+  font-size:42px;
+  text-shadow:0 0 10px #ff4da6,0 0 25px #ff4da6,0 0 45px #ff1a75;
+}
+
+.corazon{
+  position:absolute;
+  color:#ff4d88;
+  animation:flotar 6s linear infinite;
+}
+@keyframes flotar{
+  from{transform:translateY(100vh);}
+  to{transform:translateY(-10vh);}
+}
+</style>
+</head>
+
+<body>
+
+<div id="player"></div>
+
+<div id="tap">Toca la pantalla ❤️</div>
+<div id="intro">Tengo algo muy especial para ti…</div>
+<div class="rosa">🌹</div>
+<div id="mensaje">❤️ Feliz San Valentín mi nena Te quiero ❤️</div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+let player;
+
+function onYouTubeIframeAPIReady(){
+  player = new YT.Player('player',{
+    height:'0',
+    width:'0',
+    videoId:'9VOYx1i9x7k'
+  });
+}
+
+document.getElementById("tap").addEventListener("click",()=>{
+  document.getElementById("tap").style.display="none";
+
+  if(player) player.playVideo();
+
+  const intro=document.getElementById("intro");
+  const rosa=document.querySelector(".rosa");
+  const mensaje=document.getElementById("mensaje");
+
+  setTimeout(()=>intro.style.opacity=1,500);
+  setTimeout(()=>{
+    intro.style.opacity=0;
+    rosa.style.opacity=1;
+    rosa.style.bottom="20%";
+  },3500);
+  setTimeout(()=>mensaje.style.opacity=1,7000);
+
+  setInterval(()=>{
+    const c=document.createElement("div");
+    c.className="corazon";
+    c.style.left=Math.random()*100+"vw";
+    c.style.fontSize=(Math.random()*20+10)+"px";
+    c.innerHTML="❤";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),6000);
+  },500);
+});
+</script>
+
+</body>
+</html>
